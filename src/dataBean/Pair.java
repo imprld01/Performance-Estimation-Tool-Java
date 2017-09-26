@@ -24,9 +24,4 @@ public class Pair {
     public double getRatio() {
         return this.ratio;
     }
-    
-    public double compareTo(Pair pair) {
-        
-        return this.ratio - pair.getRatio();
-    }
 }

@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Hashtable;
 
 public class DataProcessor {
@@ -26,14 +28,14 @@ public class DataProcessor {
         this.doFile = doFile;
         this.famDir = famDir;
         
-        this.readGTFile();
-        this.readDOFile();
-        
         this.keys = new ArrayList<String>();
         
         this.result = new Hashtable<String, ArrayList<Pair>>();
         this.gtTable = new Hashtable<String, ArrayList<Rectangle>>();
         this.doTable = new Hashtable<String, ArrayList<Rectangle>>();
+        
+        this.readGTFile();
+        this.readDOFile();
     }
     
     private void readGTFile() {
@@ -58,6 +60,8 @@ public class DataProcessor {
                 }
                 else this.gtTable.get(key).add(new Rectangle(A, B, Rectangle.GROUND_TRUTH));
             }
+            
+            fr.close();
         }
         catch(IOException e) {
             System.out.println(e.toString());
@@ -86,6 +90,8 @@ public class DataProcessor {
                 }
                 else this.doTable.get(key).add(new Rectangle(A, B, Rectangle.DETECTED_OBJECT));
             }
+            
+            fr.close();
         }
         catch(IOException e) {
             System.out.println(e.toString());
@@ -137,6 +143,14 @@ public class DataProcessor {
                         this.result.put(key, ps);
                     }
                     else this.result.get(key).add(new Pair(gtr, dor, ratio));
+                    
+                    Collections.sort(this.result.get(key), new Comparator<Pair>(){
+                        public int compare(Pair p1, Pair p2) {
+                           return p1.getRatio() < p1.getRatio() ? -1 : p1.getRatio() > p1.getRatio() ? 1 : 0;
+                        }
+                    });
+                    
+                    for(Pair p : this.result.get(key)) System.out.print(p.getRatio() + " ");
                 }
             }
         }
