@@ -1,37 +1,50 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package performance.estimation.tool;
 
+import java.io.File;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-/**
- *
- * @author NOL
- */
 public class PerformanceEstimationTool extends Application {
+    
+    private static Stage mainStage;
     
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
+        PerformanceEstimationTool.mainStage = stage;
+        stage.setScene(new Scene(root));
         stage.show();
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }
     
+    
+    public static Stage getStage() {
+        return PerformanceEstimationTool.mainStage;
+    }
+    
+    public static File FolderSelector(String title, String defaultDir) {
+        
+        DirectoryChooser dc = new DirectoryChooser();
+        dc.setTitle(title);
+        dc.setInitialDirectory(new File(defaultDir));
+        return dc.showDialog(PerformanceEstimationTool.mainStage);
+    }
+    
+    public static File FileSelector(String title, String defaultDir) {
+        
+        FileChooser fc = new FileChooser();
+        fc.setTitle(title);
+        fc.setInitialDirectory(new File(defaultDir));
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        return fc.showOpenDialog(PerformanceEstimationTool.mainStage);
+    }
 }
