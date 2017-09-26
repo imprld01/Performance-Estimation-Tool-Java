@@ -22,13 +22,58 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextField ground_truth_path;
     
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
     
+    @FXML
+    private void GroundTruthPathButtonAction(ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void DetectedOutputPathButtonAction(ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void FrameFolderPathButtonAction(ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void SetupButtonAction(ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void FastForwardKeyReleased(ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void FastForwardButtonAction(ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void NextFrameButtonAction(ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void PreviousFrameButtonAction(ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void NextTroubleButtonAction(ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void PreviousTroubleButtonAction(ActionEvent event) {
+        
+    }
 }

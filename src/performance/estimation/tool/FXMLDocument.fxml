@@ -23,7 +23,7 @@
       <Label layoutX="702.0" layoutY="45.0" text="Ground Truth" textFill="RED" />
       <Label layoutX="702.0" layoutY="63.0" text="Detected Object" textFill="#109c10" />
       <ImageView fx:id="canvas" fitHeight="319.0" fitWidth="559.0" layoutX="134.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true" />
-      <TextField layoutX="317.0" layoutY="136.0" />
+      <TextField layoutX="317.0" layoutY="136.0" onKeyReleased="#FastForwardKeyReleased" />
       <Button fx:id="fast_go" layoutX="476.0" layoutY="136.0" mnemonicParsing="false" onAction="#FastForwardButtonAction" text="&gt;" />
       <Button fx:id="fnext" layoutX="741.0" layoutY="332.0" mnemonicParsing="false" onAction="#NextFrameButtonAction" text="&gt;&gt;" />
       <Button fx:id="fback" layoutX="53.0" layoutY="332.0" mnemonicParsing="false" onAction="#PreviousFrameButtonAction" text="&lt;&lt;" />
