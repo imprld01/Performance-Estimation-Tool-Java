@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="539.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="performance.estimation.tool.FXMLDocumentController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Ground Truth:" />
+      <Label layoutX="14.0" layoutY="44.0" text="Detected Output:" />
+      <Label layoutX="14.0" layoutY="74.0" text="Frame Folder:" />
+      <TextField fx:id="ground_truth_path" editable="false" layoutX="118.0" layoutY="10.0" prefHeight="15.0" prefWidth="409.0" />
+      <TextField disable="true" editable="false" layoutX="118.0" layoutY="40.0" prefHeight="23.0" prefWidth="409.0" />
+      <TextField disable="true" editable="false" layoutX="118.0" layoutY="70.0" prefHeight="23.0" prefWidth="409.0" />
+   </children>
+</AnchorPane>
