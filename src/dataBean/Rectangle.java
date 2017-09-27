@@ -27,4 +27,19 @@ public class Rectangle {
     public boolean getType() {
         return this.type;
     }
+    
+    public String toString() {
+        
+        StringBuilder sb = new StringBuilder();
+        
+        if(this.type == Rectangle.GROUND_TRUTH) sb.append("Ground Truth:");
+        else sb.append("Detected Object:");
+        sb.append("[");
+        sb.append(this.left_top);
+        sb.append(";");
+        sb.append(this.right_btm);
+        sb.append("]");
+        
+        return sb.toString();
+    }
 }

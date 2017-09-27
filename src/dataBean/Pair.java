@@ -24,4 +24,18 @@ public class Pair {
     public double getRatio() {
         return this.ratio;
     }
+    
+    @Override
+    public String toString() {
+        
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append(this.groundTruth);
+        sb.append(" ");
+        sb.append(this.detectedObject);
+        sb.append(" Ratio:");
+        sb.append(this.ratio);
+        
+        return sb.toString();
+    }
 }

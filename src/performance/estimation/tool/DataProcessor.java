@@ -3,6 +3,7 @@ package performance.estimation.tool;
 import dataBean.Rectangle;
 import dataBean.Point;
 import dataBean.FileReader;
+import dataBean.Pack;
 import dataBean.Pair;
 import java.io.File;
 import java.io.IOException;
@@ -18,9 +19,7 @@ public class DataProcessor {
     
     private ArrayList<String> keys;
     
-    private Hashtable<String, ArrayList<Pair>> result;
     private Hashtable<String, ArrayList<Rectangle>> gtTable, doTable;
-    
     
     public DataProcessor(File gtFile, File doFile, File famDir) {
         
@@ -30,12 +29,8 @@ public class DataProcessor {
         
         this.keys = new ArrayList<String>();
         
-        this.result = new Hashtable<String, ArrayList<Pair>>();
         this.gtTable = new Hashtable<String, ArrayList<Rectangle>>();
         this.doTable = new Hashtable<String, ArrayList<Rectangle>>();
-        
-        this.readGTFile();
-        this.readDOFile();
     }
     
     private void readGTFile() {
@@ -45,6 +40,7 @@ public class DataProcessor {
             
             String line;
             while((line = fr.readLine()) != null) {
+                
                 String [] elements = line.split(" ");
                 String key = elements[0];
                 
@@ -98,17 +94,21 @@ public class DataProcessor {
         }
     }
     
-    public void execute() {
+    public Hashtable<String, Pack> execute() {
         
         this.readGTFile();
         this.readDOFile();
         
-        this.process();
+        return this.process();
     }
     
-    private void process() {
+    private Hashtable<String, Pack> process() {
+        
+        Hashtable<String, Pack> result = new Hashtable<String, Pack>();
         
         for(String key : keys) {
+            ArrayList<Pair> temp = new ArrayList<Pair>();
+            ArrayList<Rectangle> list = new ArrayList<Rectangle>();
             ArrayList<Rectangle> gtrs = gtTable.get(key);
             ArrayList<Rectangle> dors = doTable.get(key);
             
@@ -137,22 +137,41 @@ public class DataProcessor {
                         ratio = intersection / union;
                     }
                     
-                    if(!this.result.containsKey(key)){
-                        ArrayList<Pair> ps = new ArrayList<Pair>();
-                        ps.add(new Pair(gtr, dor, ratio));
-                        this.result.put(key, ps);
-                    }
-                    else this.result.get(key).add(new Pair(gtr, dor, ratio));
+                    temp.add(new Pair(gtr, dor, ratio));
                     
-                    Collections.sort(this.result.get(key), new Comparator<Pair>(){
-                        public int compare(Pair p1, Pair p2) {
-                           return p1.getRatio() < p1.getRatio() ? -1 : p1.getRatio() > p1.getRatio() ? 1 : 0;
-                        }
-                    });
-                    
-                    for(Pair p : this.result.get(key)) System.out.print(p.getRatio() + " ");
+                    if(!list.contains(gtr)) list.add(gtr);
+                    if(!list.contains(dor)) list.add(dor);
                 }
             }
+            
+            Collections.sort(temp, new Comparator<Pair>(){
+                // from big to small
+                public int compare(Pair p1, Pair p2) {
+                   return p1.getRatio() > p2.getRatio() ? -1 : p1.getRatio() < p2.getRatio() ? 1 : 0;
+                }
+            });
+            
+            ArrayList<Pair> pair = new ArrayList<Pair>();
+            ArrayList<Rectangle> unpair = new ArrayList<Rectangle>();
+            
+            for(Pair p : temp) {
+                if(p.getRatio() == -1) break;
+                
+                Rectangle r1 = p.getGT();
+                Rectangle r2 = p.getDO();
+                
+                if(list.contains(r1) && list.contains(r2)){
+                    pair.add(p);
+                    list.remove(r1);
+                    list.remove(r2);
+                }
+            }
+            
+            for(Rectangle r : list) unpair.add(r);
+            
+            result.put(key, new Pack(pair, unpair));
         }
+        
+        return result;
     }
 }
