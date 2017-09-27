@@ -14,6 +14,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -31,10 +33,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextArea ratio_table;
     @FXML
-    private TextField gt_path_text, do_path_text, fm_path_text, fast_go_text;
-    @FXML
-    private Button gt_path_btn, do_path_btn, frame_path_btn, setup_btn, fast_go_btn,
-                   frame_next_btn, frame_back_btn, trouble_next_btn, trouble_back_btn;
+    private TextField gt_path_text, do_path_text, fm_path_text, fast_go_text, threshold;
     
     private int index;
     private ArrayList<File> list;
@@ -154,6 +153,12 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
+    private void changeRatioEvent() {
+        
+        this.showImage();
+    }
+    
+    @FXML
     private void NextTroubleButtonAction(ActionEvent event) {
         
     }
@@ -190,19 +195,23 @@ public class FXMLDocumentController implements Initializable {
         ArrayList<Pair> pairs = pack.getPair();
         ArrayList<dataBean.Rectangle> unpairs = pack.getUnpair();
         
-        for(Pair pair : pairs){
-            this.showNormalGT(pair.getGT(), resizeW, resizeH);
-            this.showNormalDO(pair.getDO(), resizeW, resizeH);
+        for(Pair pair : pairs) {
+            if(pair.getRatio() < (Double.parseDouble(this.threshold.getText()) / 100)) {
+                this.showTroubleGT(pair.getGT(), resizeW, resizeH);
+                this.showTroubleDO(pair.getDO(), resizeW, resizeH);
+            }else {
+                this.showNormalGT(pair.getGT(), resizeW, resizeH);
+                this.showNormalDO(pair.getDO(), resizeW, resizeH);
+            }
         }
         
         for(dataBean.Rectangle unpair : unpairs) {
-            
             if(unpair.getType() == dataBean.Rectangle.GROUND_TRUTH) showTroubleGT(unpair, resizeW, resizeH);
             else showTroubleDO(unpair, resizeW, resizeH);
         }
     }
     
-    public void draw(dataBean.Rectangle pos, double resizeW, double resizeH, Color color) {
+    public void draw(dataBean.Rectangle pos, double resizeW, double resizeH, Color color, Color fill) {
         
         double x1 = pos.getLT().getX();
         double y1 = pos.getLT().getY();
@@ -210,7 +219,7 @@ public class FXMLDocumentController implements Initializable {
         double y2 = pos.getRB().getY();
         
         Rectangle rect = new Rectangle(x1 * resizeW, y1 * resizeH, (x2 - x1) * resizeW, (y2 - y1) * resizeH);
-        rect.setFill(Color.TRANSPARENT);
+        rect.setFill(fill);
         rect.setStroke(color);
         
         this.pane.getChildren().add(rect);
@@ -218,21 +227,21 @@ public class FXMLDocumentController implements Initializable {
     
     public void showNormalGT(dataBean.Rectangle pos, double resizeW, double resizeH) {
         
-        this.draw(pos, resizeW, resizeH, Color.RED);
+        this.draw(pos, resizeW, resizeH, Color.RED, Color.TRANSPARENT);
     }
     
     public void showNormalDO(dataBean.Rectangle pos, double resizeW, double resizeH) {
         
-        this.draw(pos, resizeW, resizeH, Color.GREEN);
+        this.draw(pos, resizeW, resizeH, Color.GREEN, Color.TRANSPARENT);
     }
     
     public void showTroubleGT(dataBean.Rectangle pos, double resizeW, double resizeH) {
         
-        this.draw(pos, resizeW, resizeH, new Color(1.0, 0, 0, 0.2));
+        this.draw(pos, resizeW, resizeH, Color.RED, new Color(1.0, 0, 0, 0.5));
     }
     
     public void showTroubleDO(dataBean.Rectangle pos, double resizeW, double resizeH) {
         
-        this.draw(pos, resizeW, resizeH, new Color(0, 1.0, 0, 0.2));
+        this.draw(pos, resizeW, resizeH, Color.GREEN, new Color(0, 1.0, 0, 0.4));
     }
 }

@@ -26,11 +26,6 @@ public class PerformanceEstimationTool extends Application {
         launch(args);
     }
     
-    
-    public static Stage getStage() {
-        return PerformanceEstimationTool.mainStage;
-    }
-    
     public static File FolderSelector(String title, String defaultDir) {
         
         DirectoryChooser dc = new DirectoryChooser();
