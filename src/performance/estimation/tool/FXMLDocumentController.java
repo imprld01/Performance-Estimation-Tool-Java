@@ -95,16 +95,30 @@ public class FXMLDocumentController implements Initializable {
     private void FastForwardKeyReleased(KeyEvent event) {
         
         if (event.getCode() == KeyCode.ENTER)  {
-            this.index = this.list.indexOf(fast_go_text.getText());
+            int temp = this.find(fast_go_text.getText());
+            if(temp != -1) this.index = temp;
             this.showImage();
         }
     }
     
     @FXML
     private void FastForwardButtonAction(ActionEvent event) {
-        
-        this.index = this.list.indexOf(fast_go_text.getText());
+
+        int temp = this.find(fast_go_text.getText());
+        if(temp != -1) this.index = temp;
         this.showImage();
+    }
+    
+    private int find(String wanted) {
+        
+        int index = 0;
+        
+        for(File f : list) {       
+            if(f.getName().equals(wanted)) break;
+            ++index;
+        }
+        
+        return index;
     }
     
     @FXML

@@ -99,8 +99,6 @@ public class DataProcessor {
         this.readGTFile();
         this.readDOFile();
         
-        for(String key : keys) System.out.println(key);
-        
         return this.process();
     }
     
@@ -115,36 +113,39 @@ public class DataProcessor {
             ArrayList<Rectangle> gtrs = this.gtTable.get(key);
             ArrayList<Rectangle> dors = this.doTable.get(key);
             
-            for(Rectangle gtr : gtrs) {
-                for(Rectangle dor : dors) {
-                    
-                    double ratio = -1;
-                    double gt_lt_x = gtr.getLT().getX();
-                    double gt_lt_y = gtr.getLT().getY();
-                    double gt_rb_x = gtr.getRB().getX();
-                    double gt_rb_y = gtr.getRB().getY();
-                    double do_lt_x = dor.getLT().getX();
-                    double do_lt_y = dor.getLT().getY();
-                    double do_rb_x = dor.getRB().getX();
-                    double do_rb_y = dor.getRB().getY();
-                    
-                    if(!((do_lt_y > gt_rb_y) || (gt_lt_y > do_rb_y) || (gt_lt_x > do_rb_x) || (do_lt_x > gt_rb_x))) {
-                        
-                        double [] xArr = {gt_lt_x, gt_rb_x, do_lt_x, do_rb_x};
-                        double [] yArr = {gt_lt_y, gt_rb_y, do_lt_y, do_rb_y};
-                        
-                        Arrays.sort(xArr);
-                        Arrays.sort(yArr);
-                        
-                        double intersection = (xArr[2] - xArr[1]) * (yArr[2] - yArr[1]);
-                        double union = (gt_rb_x - gt_lt_x) * (gt_rb_y - gt_lt_y) + (do_rb_x - do_lt_x) * (do_rb_y - do_lt_y) - intersection;
-                        ratio = intersection / union;
+            if(gtrs != null && dors != null) {
+                
+                for(Rectangle gtr : gtrs) if(!list.contains(gtr)) list.add(gtr);
+                for(Rectangle dor : dors) if(!list.contains(dor)) list.add(dor);
+                
+                for(Rectangle gtr : gtrs) {
+                    for(Rectangle dor : dors) {
+
+                        double ratio = -1;
+                        double gt_lt_x = gtr.getLT().getX();
+                        double gt_lt_y = gtr.getLT().getY();
+                        double gt_rb_x = gtr.getRB().getX();
+                        double gt_rb_y = gtr.getRB().getY();
+                        double do_lt_x = dor.getLT().getX();
+                        double do_lt_y = dor.getLT().getY();
+                        double do_rb_x = dor.getRB().getX();
+                        double do_rb_y = dor.getRB().getY();
+
+                        if(!((do_lt_y > gt_rb_y) || (gt_lt_y > do_rb_y) || (gt_lt_x > do_rb_x) || (do_lt_x > gt_rb_x))) {
+
+                            double [] xArr = {gt_lt_x, gt_rb_x, do_lt_x, do_rb_x};
+                            double [] yArr = {gt_lt_y, gt_rb_y, do_lt_y, do_rb_y};
+
+                            Arrays.sort(xArr);
+                            Arrays.sort(yArr);
+
+                            double intersection = (xArr[2] - xArr[1]) * (yArr[2] - yArr[1]);
+                            double union = (gt_rb_x - gt_lt_x) * (gt_rb_y - gt_lt_y) + (do_rb_x - do_lt_x) * (do_rb_y - do_lt_y) - intersection;
+                            ratio = intersection / union;
+                        }
+
+                        temp.add(new Pair(gtr, dor, ratio));
                     }
-                    
-                    temp.add(new Pair(gtr, dor, ratio));
-                    
-                    if(!list.contains(gtr)) list.add(gtr);
-                    if(!list.contains(dor)) list.add(dor);
                 }
             }
             
