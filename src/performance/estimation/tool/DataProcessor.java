@@ -99,6 +99,8 @@ public class DataProcessor {
         this.readGTFile();
         this.readDOFile();
         
+        for(String key : keys) System.out.println(key);
+        
         return this.process();
     }
     
@@ -106,14 +108,16 @@ public class DataProcessor {
         
         Hashtable<String, Pack> result = new Hashtable<String, Pack>();
         
-        for(String key : keys) {
+        for(String key : this.keys) {
+            
             ArrayList<Pair> temp = new ArrayList<Pair>();
             ArrayList<Rectangle> list = new ArrayList<Rectangle>();
-            ArrayList<Rectangle> gtrs = gtTable.get(key);
-            ArrayList<Rectangle> dors = doTable.get(key);
+            ArrayList<Rectangle> gtrs = this.gtTable.get(key);
+            ArrayList<Rectangle> dors = this.doTable.get(key);
             
             for(Rectangle gtr : gtrs) {
                 for(Rectangle dor : dors) {
+                    
                     double ratio = -1;
                     double gt_lt_x = gtr.getLT().getX();
                     double gt_lt_y = gtr.getLT().getY();
