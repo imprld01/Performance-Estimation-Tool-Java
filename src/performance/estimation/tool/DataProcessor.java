@@ -110,6 +110,8 @@ public class DataProcessor {
     
     public Hashtable<String, Pack> process(double input_threshold) {
         
+        this.troubleKey.clear();
+        
         Hashtable<String, Pack> result = new Hashtable<String, Pack>();
         
         for(String key : this.keys) {

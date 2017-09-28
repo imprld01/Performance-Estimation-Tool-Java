@@ -33,6 +33,7 @@ public class FXMLDocumentController implements Initializable {
     private TextField gt_path_text, do_path_text, fm_path_text, fast_go_text, threshold;
     
     private int index;
+    private DataProcessor dp;
     private ArrayList<File> list;
     private Hashtable<String, Pack> result;
     private ArrayList<Integer> troubleKey;
@@ -41,6 +42,7 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         this.index = 0;
+        this.dp = null;
         this.list = null;
         this.result = null;
         this.troubleKey = new ArrayList<Integer>();
@@ -86,7 +88,7 @@ public class FXMLDocumentController implements Initializable {
         
         this.index = 0;
         this.troubleKey.clear();
-        DataProcessor dp = new DataProcessor(gtFile, doFile, famDir);
+        this.dp = new DataProcessor(gtFile, doFile, famDir);
         this.result = dp.execute(Double.parseDouble(this.threshold.getText()));
         ArrayList<String> temp  = dp.getTroubleKey();
         
@@ -163,6 +165,8 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void changeRatioEvent() {
+        
+        this.dp.process(Double.parseDouble(this.threshold.getText()));
         
         this.showImage();
     }
