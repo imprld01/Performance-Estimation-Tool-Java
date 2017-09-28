@@ -16,7 +16,11 @@ You can find the executable jar file under this [folder](https://github.com/impr
 
 # GUI DEMO
 
+Prepare the needed files first.
 ![GUI](/res/gui.JPG)
+
+Press 'Setup' Button to show the result.
+![GUI](/res/gui2.JPG)
 
 # License
 [![Creative Commons License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)  
