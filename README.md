@@ -16,6 +16,8 @@ You can find the executable jar file under this [folder](https://github.com/impr
 
 # GUI DEMO
 
+The testing data comes from [NOL](http://people.cs.nctu.edu.tw/~yi/).
+
 Prepare the needed files first.  
 ![GUI](/res/gui.JPG)
 
