@@ -7,7 +7,7 @@
     <offline-allowed/>
   </information>
   <resources>
-    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <j2se version="1.6+" java-vm-args="-Xms2048m "  href="http://java.sun.com/products/autodl/j2se"/>
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Performance Estimation Tool" >
     <param name="requiredFXVersion" value="8.0+"/>

@@ -13,9 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -38,6 +35,7 @@ public class FXMLDocumentController implements Initializable {
     private int index;
     private ArrayList<File> list;
     private Hashtable<String, Pack> result;
+    private ArrayList<Integer> troubleKey;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -45,6 +43,7 @@ public class FXMLDocumentController implements Initializable {
         this.index = 0;
         this.list = null;
         this.result = null;
+        this.troubleKey = new ArrayList<Integer>();
     }
     
     public TextField getFastGoText() {
@@ -83,10 +82,18 @@ public class FXMLDocumentController implements Initializable {
         File doFile = new File(this.do_path_text.getText());
         File famDir = new File(this.fm_path_text.getText());
         
-        this.index = 0;
         this.list = new ArrayList<File>(Arrays.asList(famDir.listFiles()));
-        this.result = new DataProcessor(gtFile, doFile, famDir).execute();
         
+        DataProcessor dp = new DataProcessor(gtFile, doFile, famDir);
+        this.result = dp.execute(Double.parseDouble(this.threshold.getText()) / 100);
+        ArrayList<String> temp  = dp.getTroubleKey();
+        
+        int index = 0;
+        for(File f : list) {       
+            if(temp.contains(f.getName())) this.troubleKey.add(index);
+            ++index;
+        }
+         
         this.showImage();
     }
     
@@ -161,11 +168,42 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void NextTroubleButtonAction(ActionEvent event) {
         
+        for(int key : this.troubleKey) {
+            if(key == this.troubleKey.get(this.troubleKey.size() - 1) && key == this.index) {
+               Alert alert = new Alert(AlertType.WARNING);
+               alert.setTitle("!! Warning !!");
+               alert.setHeaderText("No Next Trouble Frame Available");
+               alert.setContentText("There is no next trouble frame available!");
+               alert.showAndWait();
+               break;
+            }
+            if(key > this.index){
+                this.index = key;
+                this.showImage();
+                break;
+            }
+        }
     }
     
     @FXML
     private void PreviousTroubleButtonAction(ActionEvent event) {
         
+        for(int index = this.troubleKey.size() - 1; index >= 0;--index) {
+            int key = this.troubleKey.get(index);
+            if(index == 0 && key == this.index) {
+               Alert alert = new Alert(AlertType.WARNING);
+               alert.setTitle("!! Warning !!");
+               alert.setHeaderText("No Previous Trouble Frame Available");
+               alert.setContentText("There is no previous trouble frame available!");
+               alert.showAndWait();
+               break;
+            }
+            if(key < this.index){
+                this.index = key;
+                this.showImage();
+                break;
+            }
+        }
     }
     
     public void showImage() {
@@ -180,7 +218,7 @@ public class FXMLDocumentController implements Initializable {
         canvas.setFitHeight(this.pane.getHeight());
         
         this.pane.getChildren().add(canvas);
-        this.drawPackOnImage(pack, image);
+        if(pack != null) this.drawPackOnImage(pack, image);
         
         this.fast_go_text.setText(imageFile.getName());
         if(pack == null) this.ratio_table.setText("");

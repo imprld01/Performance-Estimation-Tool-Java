@@ -12,12 +12,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 
 public class DataProcessor {
     
     private File gtFile, doFile, famDir;
     
-    private ArrayList<String> keys;
+    private ArrayList<String> keys, troubleKey;
     
     private Hashtable<String, ArrayList<Rectangle>> gtTable, doTable;
     
@@ -28,9 +30,15 @@ public class DataProcessor {
         this.famDir = famDir;
         
         this.keys = new ArrayList<String>();
+        this.troubleKey = new ArrayList<String>();
         
         this.gtTable = new Hashtable<String, ArrayList<Rectangle>>();
         this.doTable = new Hashtable<String, ArrayList<Rectangle>>();
+    }
+    
+    public ArrayList<String> getTroubleKey() {
+        
+        return this.troubleKey;
     }
     
     private void readGTFile() {
@@ -94,15 +102,15 @@ public class DataProcessor {
         }
     }
     
-    public Hashtable<String, Pack> execute() {
+    public Hashtable<String, Pack> execute(double input_threshold) {
         
         this.readGTFile();
         this.readDOFile();
         
-        return this.process();
+        return this.process(input_threshold);
     }
     
-    private Hashtable<String, Pack> process() {
+    private Hashtable<String, Pack> process(double input_threshold) {
         
         Hashtable<String, Pack> result = new Hashtable<String, Pack>();
         
@@ -161,6 +169,9 @@ public class DataProcessor {
             
             for(Pair p : temp) {
                 if(p.getRatio() == -1) break;
+                else if(p.getRatio() < input_threshold){
+                    if(!this.troubleKey.contains(key)) this.troubleKey.add(key);
+                }
                 
                 Rectangle r1 = p.getGT();
                 Rectangle r2 = p.getDO();
@@ -172,11 +183,21 @@ public class DataProcessor {
                 }
             }
             
-            for(Rectangle r : list) unpair.add(r);
+            for(Rectangle r : list){
+                if(!this.troubleKey.contains(key)) this.troubleKey.add(key);
+                unpair.add(r);
+            }
             
             result.put(key, new Pack(pair, unpair));
         }
         
         return result;
+    }
+    
+    public void release() {
+        
+        this.keys.clear();
+        this.gtTable.clear();
+        this.doTable.clear();
     }
 }

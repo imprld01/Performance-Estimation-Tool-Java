@@ -14,20 +14,12 @@ public class Pack {
     
     public ArrayList<Pair> getPair() {
         
-        ArrayList<Pair> temp = new ArrayList<Pair>();
-        
-        for(Pair p : this.pair) temp.add(p);
-        
-        return temp;
+        return this.pair;
     }
     
     public ArrayList<Rectangle> getUnpair() {
         
-        ArrayList<Rectangle> temp = new ArrayList<Rectangle>();
-        
-        for(Rectangle r : this.unpair) temp.add(r);
-        
-        return temp;
+        return this.unpair;
     }
     
     @Override
