@@ -84,8 +84,10 @@ public class FXMLDocumentController implements Initializable {
         
         this.list = new ArrayList<File>(Arrays.asList(famDir.listFiles()));
         
+        this.index = 0;
+        this.troubleKey.clear();
         DataProcessor dp = new DataProcessor(gtFile, doFile, famDir);
-        this.result = dp.execute(Double.parseDouble(this.threshold.getText()) / 100);
+        this.result = dp.execute(Double.parseDouble(this.threshold.getText()));
         ArrayList<String> temp  = dp.getTroubleKey();
         
         int index = 0;
@@ -234,7 +236,7 @@ public class FXMLDocumentController implements Initializable {
         ArrayList<dataBean.Rectangle> unpairs = pack.getUnpair();
         
         for(Pair pair : pairs) {
-            if(pair.getRatio() < (Double.parseDouble(this.threshold.getText()) / 100)) {
+            if((pair.getRatio() * 100) < Double.parseDouble(this.threshold.getText())) {
                 this.showTroubleGT(pair.getGT(), resizeW, resizeH);
                 this.showTroubleDO(pair.getDO(), resizeW, resizeH);
             }else {

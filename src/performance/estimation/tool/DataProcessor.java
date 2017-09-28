@@ -108,7 +108,7 @@ public class DataProcessor {
         return this.process(input_threshold);
     }
     
-    private Hashtable<String, Pack> process(double input_threshold) {
+    public Hashtable<String, Pack> process(double input_threshold) {
         
         Hashtable<String, Pack> result = new Hashtable<String, Pack>();
         
@@ -167,9 +167,6 @@ public class DataProcessor {
             
             for(Pair p : temp) {
                 if(p.getRatio() == -1) break;
-                else if(p.getRatio() < input_threshold){
-                    if(!this.troubleKey.contains(key)) this.troubleKey.add(key);
-                }
                 
                 Rectangle r1 = p.getGT();
                 Rectangle r2 = p.getDO();
@@ -178,11 +175,21 @@ public class DataProcessor {
                     pair.add(p);
                     list.remove(r1);
                     list.remove(r2);
+                    
+                    if(p.getRatio() * 100 < input_threshold){
+                        if(!this.troubleKey.contains(key)){
+                            System.out.println("Pair Trouble:" + key + " " + p.getRatio());
+                            this.troubleKey.add(key);
+                        }
+                    }
                 }
             }
             
             for(Rectangle r : list){
-                if(!this.troubleKey.contains(key)) this.troubleKey.add(key);
+                if(!this.troubleKey.contains(key)){
+                    System.out.println("Unpair Trouble:" + key);
+                    this.troubleKey.add(key);
+                }
                 unpair.add(r);
             }
             

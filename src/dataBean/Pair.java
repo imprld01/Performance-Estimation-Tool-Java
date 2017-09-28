@@ -14,15 +14,19 @@ public class Pair {
     }
     
     public Rectangle getGT() {
+        
         return this.groundTruth;
     }
     
     public Rectangle getDO() {
+        
         return this.detectedObject;
     }
     
     public double getRatio() {
-        return this.ratio;
+        
+        // 5 digits precision
+        return (double)Math.round(this.ratio * 100000d) / 100000d;
     }
     
     @Override
