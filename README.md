@@ -14,6 +14,10 @@ You can find the Matlab edition [here](https://github.com/imprld01/Performance-E
 
 You can find the executable jar file under this [folder](https://github.com/imprld01/Performance-Estimation-Tool-Java/tree/master/dist) or find it [here](https://github.com/imprld01/Performance-Estimation-Tool-Java/blob/master/dist/Performance%20Estimation%20Tool.jar) directly.
 
+# GUI DEMO
+
+![GUI](/res/gui.JPG)
+
 # License
 [![Creative Commons License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)  
 This project is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/) and the [MIT License](LICENSE.md).
