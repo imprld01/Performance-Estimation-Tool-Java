@@ -12,8 +12,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
 
 public class DataProcessor {
     
