@@ -11,7 +11,7 @@ You can find the Matlab edition [here](https://github.com/imprld01/Performance-E
 
 # GUI DEMO
 
-The testing data comes from [NOL](http://people.cs.nctu.edu.tw/~yi/).
+* The testing data comes from [NOL](http://people.cs.nctu.edu.tw/~yi/).
 
 1. Prepare the needed files first.  
 ![GUI](/res/gui.JPG)
