@@ -13,10 +13,10 @@ You can find the Matlab edition [here](https://github.com/imprld01/Performance-E
 
 The testing data comes from [NOL](http://people.cs.nctu.edu.tw/~yi/).
 
-Prepare the needed files first.  
+1. Prepare the needed files first.  
 ![GUI](/res/gui.JPG)
 
-Press 'Setup' Button to show the result.  
+2. Press 'Setup' Button to show the result.  
 ![GUI](/res/gui2.JPG)
 
 # Update Log
