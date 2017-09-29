@@ -1,7 +1,6 @@
 # Performance-Estimation-Tool-Java
 
-A tool reading ground truth data and detected object data provides  
-visualization way to estimate position accuracy.
+A tool reading ground truth data and detected object data provides visualization way to estimate position accuracy.
 
 The input data needs:
 1. Ground Truth Data: [frame_name left_top_x left_top_y right_bottom_x right_bottom_y]
