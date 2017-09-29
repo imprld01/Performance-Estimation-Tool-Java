@@ -19,6 +19,13 @@ Prepare the needed files first.
 Press 'Setup' Button to show the result.  
 ![GUI](/res/gui2.JPG)
 
+# Update Log
+
+* 2017/09/28
+  * fix the logic of trouble key collection
+* 2017/09/29
+  * update trouble key list after ratio changing event
+
 # Development Environment
 
 * NetBeans
