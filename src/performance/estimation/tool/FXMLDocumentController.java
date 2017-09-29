@@ -168,6 +168,15 @@ public class FXMLDocumentController implements Initializable {
         
         this.dp.process(Double.parseDouble(this.threshold.getText()));
         
+        ArrayList<String> temp  = this.dp.getTroubleKey();
+        
+        int index = 0;
+        this.troubleKey.clear();
+        for(File f : list) {       
+            if(temp.contains(f.getName())) this.troubleKey.add(index);
+            ++index;
+        }
+        
         this.showImage();
     }
     
@@ -175,7 +184,7 @@ public class FXMLDocumentController implements Initializable {
     private void NextTroubleButtonAction(ActionEvent event) {
         
         for(int key : this.troubleKey) {
-            if(key == this.troubleKey.get(this.troubleKey.size() - 1) && key == this.index) {
+            if(key == this.troubleKey.get(this.troubleKey.size() - 1) && key <= this.index) {
                Alert alert = new Alert(AlertType.WARNING);
                alert.setTitle("!! Warning !!");
                alert.setHeaderText("No Next Trouble Frame Available");
@@ -196,7 +205,7 @@ public class FXMLDocumentController implements Initializable {
         
         for(int index = this.troubleKey.size() - 1; index >= 0;--index) {
             int key = this.troubleKey.get(index);
-            if(index == 0 && key == this.index) {
+            if(index == 0 && key >= this.index) {
                Alert alert = new Alert(AlertType.WARNING);
                alert.setTitle("!! Warning !!");
                alert.setHeaderText("No Previous Trouble Frame Available");

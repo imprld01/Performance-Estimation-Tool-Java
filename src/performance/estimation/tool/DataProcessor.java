@@ -179,19 +179,13 @@ public class DataProcessor {
                     list.remove(r2);
                     
                     if(p.getRatio() * 100 < input_threshold){
-                        if(!this.troubleKey.contains(key)){
-                            System.out.println("Pair Trouble:" + key + " " + p.getRatio());
-                            this.troubleKey.add(key);
-                        }
+                        if(!this.troubleKey.contains(key)) this.troubleKey.add(key);
                     }
                 }
             }
             
             for(Rectangle r : list){
-                if(!this.troubleKey.contains(key)){
-                    System.out.println("Unpair Trouble:" + key);
-                    this.troubleKey.add(key);
-                }
+                if(!this.troubleKey.contains(key)) this.troubleKey.add(key);
                 unpair.add(r);
             }
             
