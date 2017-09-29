@@ -33,7 +33,7 @@ You can find the Matlab edition [here](https://github.com/imprld01/Performance-E
 * under windows 10 64-bit OS
 * Java Development Kit (ver. 8u144)
 
-If you want to use Eclipse to develop JavaFx application, you can install [plugin]() from '' on Eclipse.
+If you want to use eclipse to develop JavaFx application, you can install [extension](http://download.eclipse.org/efxclipse/updates-released/2.4.0/site) from e(fx)clipse on eclipse using the "Install New Software" wizard.
 
 # Execution Environment
 
